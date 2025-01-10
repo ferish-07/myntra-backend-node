@@ -4,16 +4,27 @@ const sql = require("mssql");
 const app = express();
 app.use(express.json());
 // SQL Server configuration
-var config = {
-  user: "ferish.modi", // Database username
-  password: "Ferish@123", // Database password
-  server: "localhost\\SQLEXPRESS", // Server IP address
-  database: "Myntra", // Database name
+// var config = {
+//   user: "ferish.modi", // Database username
+//   password: "Ferish@123", // Database password
+//   server: "localhost\\SQLEXPRESS", // Server IP address
+//   database: "Myntra", // Database name
+//   options: {
+//     encrypt: false, // Disable encryption
+//   },
+// };
+const config = {
+  user: "sa",
+  password: "Ferish123",
+  host: "localhost",
+  server: "localhost",
+  port: 1433,
+  database: "Myntra",
   options: {
-    encrypt: false, // Disable encryption
+    encrypt: false,
+    trustServerCertificate: true,
   },
 };
-
 // Connect to SQL Server
 sql.connect(config, (err) => {
   if (err) {

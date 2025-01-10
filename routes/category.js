@@ -18,7 +18,7 @@ router.post("/add/maincategory/v1", async (req, res) => {
 });
 
 router.post("/add/section/v1", async (req, res) => {
-  const { section_name, column_no, category_id } = req.body;
+  const { section_name, column_no, category_id, section_id } = req.body;
   const sqlRequest = new sql.Request();
   if (!section_name || section_name.lenght == 0) {
     return res.send({
@@ -42,6 +42,8 @@ router.post("/add/section/v1", async (req, res) => {
   sqlRequest.input("section_name", sql.VarChar, section_name);
   sqlRequest.input("column_no", sql.Int, column_no);
   sqlRequest.input("category_id", sql.Int, category_id);
+
+  section_id ? sqlRequest.input("section_id", sql.Int, section_id) : null;
   sqlRequest.execute("insert_section", (err, result) => {
     if (err) {
       return res.send({
@@ -58,7 +60,7 @@ router.post("/add/section/v1", async (req, res) => {
 });
 
 router.post("/add/subSection/v1", async (req, res) => {
-  const { sub_section_name, section_id } = req.body;
+  const { sub_section_name, section_id, sub_section_id } = req.body;
   if (!sub_section_name || sub_section_name.lenght == 0) {
     return res.send({
       error_status: false,
@@ -75,6 +77,11 @@ router.post("/add/subSection/v1", async (req, res) => {
   const sqlRequest = new sql.Request();
   sqlRequest.input("sub_section_name", sql.VarChar, sub_section_name);
   sqlRequest.input("section_id", sql.Int, section_id);
+
+  sub_section_id
+    ? sqlRequest.input("sub_section_id", sql.Int, sub_section_id)
+    : null;
+
   sqlRequest.execute("insert_sub_section", async (err, result) => {
     if (err) {
       return res.send({
